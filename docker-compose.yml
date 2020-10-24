@@ -1,0 +1,23 @@
+version: '2'
+services:
+    web:
+        build: .
+        ports:
+            - "5000:5000"
+        networks:
+          - web
+        volumes:
+            - .:/svelte/myapp
+        restart: always
+        labels:
+          traefik.enable: true
+          traefik.port: 5000
+          traefik.frontend.rule: "Host:otter.jetzt"
+          traefik.frontend.redirect.entryPoint: "https"
+          traefik.docker.network: web
+
+networks:
+  web:
+    external: true
+
+
